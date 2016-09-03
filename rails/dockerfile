@@ -1,0 +1,9 @@
+FROM ruby:2.3
+
+ADD ../code/Web-Spider /usr/src/app/
+WORKDIR /usr/src/app/Web-Spider
+
+RUN bundle install
+
+EXPOSE 3000
+CMD ["rails", "server", "-b", "0.0.0.0"]
