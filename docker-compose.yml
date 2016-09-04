@@ -1,15 +1,20 @@
 rails:
   build: ./rails
+  container_name: rails
   links:
     - "mysql"
   ports:
     - "3000:3000"
+  command: "bash /tmp/build.sh"
+  volumes:
+    # 挂载源代码目录
+    - ./code:/tmp/code
 mysql:
   build: ./mysql
+  container_name: mysql
   expose:
     - "3306"
-  environment
-  	MYSQL_DATABASE: webspider_development
-  	MYSQL_ROOT_PASSWORD: 831124
+  environment:
+    MYSQL_ROOT_PASSWORD: 831124
   volumes:
-  	- ./data/mysql:/var/lib/mysql
+    - ./data/mysql:/var/lib/mysql
