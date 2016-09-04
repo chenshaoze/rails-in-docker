@@ -1,24 +1,15 @@
-FROM ruby:2.3
-
-# see update.sh for why all "apt-get install"s have to stay as one long line
-RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
-# see http://guides.rubyonrails.org/command_line.html#rails-dbconsole
-RUN apt-get update && apt-get install -y mysql-client --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
-ENV RAILS_VERSION 4.2.5
-
-RUN gem install bundler
-RUN gem install rails --version "$RAILS_VERSION"
+FROM rails:latest
 
 # 拷贝部署脚本到镜像
 ADD build.sh /tmp/
-
-RUN mkdir /usr/src/app/
+# 允许挂载源码目录
+VOLUME /usr/src/app/
 
 WORKDIR /usr/src/app
 
-# 允许挂载源码目录
-VOLUME /tmp/code
+#RUN echo `pwd` 
+
+#RUN bundle install
 
 EXPOSE 3000
+#CMD ["rails", "server", "-b", "0.0.0.0"]
